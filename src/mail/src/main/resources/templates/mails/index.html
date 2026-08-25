@@ -1,0 +1,94 @@
+<html layout:decorate="~{mails/layout}">
+<body>
+  <div layout:fragment="content">
+    <!-- START -->
+
+    <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-4">
+      <a
+        class="btn btn-primary"
+        th:href="@{/mails/new}"
+      >
+        <i class="bi bi-plus-lg me-1"></i> New Mail Template
+      </a>
+    </div>
+
+    <!-- TABLE -->
+    <div class="table-container">
+      <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0">
+          <thead class="table-light">
+            <tr>
+              <th>ID</th>
+              <th>Description</th>
+              <th class="text-end">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="tableBody">
+            <tr th:each="template : ${content}">
+              <td th:text="${template.id}"></td>
+              <td th:text="${template.description}"></td>
+              <td class="text-end">
+                <a class="btn btn-sm btn-outline-info action-btn me-1"
+                  th:href="@{/mails/show/{id}(id=${template.id})}"
+                  title="Show">
+                  <i class="bi bi-eye"></i>
+                </a>
+                <a class="btn btn-sm btn-outline-primary action-btn me-1"
+                  title="Edit"
+                  th:href="@{/mails/edit/{id}(id=${template.id})}">
+                  <i class="bi bi-pencil"></i>
+                </a>
+                <button class="btn btn-sm btn-outline-danger action-btn"
+                  title="Delete" onclick="openDelete(this)"
+                  th:attr="template-name=${template.id}">
+                  <i class="bi bi-trash"></i>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- PAGINATION -->
+
+      <!-- <div class="d-flex flex-wrap justify-content-between align-items-center mt-3 gap-2">
+        <span id="paginationInfo" class="text-muted small"
+          th:text="'Showing ' + ${pageSize} + ' of ' + ${totalElements} + ' menus'">
+        </span>
+        <nav aria-label="Paginación de menús">
+          <ul class="pagination pagination-sm mb-0" id="pagination">
+            <li
+              class="page-item"
+              th:classappend="${currentPage} == 0 ? 'disabled' : ''">
+              <a class="page-link" href="#" th:if="${currentPage} == 0">
+                Previus
+              </a>
+              <a class="page-link" th:href="@{/menus?page={page}(page=${currentPage})}"
+                th:if="${currentPage} != 0">
+                Previus
+              </a>
+            </li>
+            <li class="page-item">
+              <a class="page-link" th:text="${currentPage} + 1">
+              </a>
+            </li>
+            <li class="page-item"
+              th:classappend="${currentPage} + 1 == ${totalPages} ? 'disabled' : ''">
+              <a class="page-link" href="#"
+                th:if="${currentPage} + 1 == ${totalPages}">
+                Next
+              </a>
+              <a class="page-link" th:href="@{/menus?page={page}(page=${currentPage} + 2)}"
+                th:if="${currentPage} + 1 != ${totalPages}" >
+                Next
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </div> -->
+    </div>
+
+    <!-- END -->
+  </div>
+</body>
+</html>
