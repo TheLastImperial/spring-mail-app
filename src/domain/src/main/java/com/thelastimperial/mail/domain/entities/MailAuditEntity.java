@@ -21,7 +21,7 @@ import lombok.NoArgsConstructor;
 @Data
 @Entity
 @NoArgsConstructor
-@Table(name = "mail_templates")
+@Table(name = "mail_audits")
 public class MailAuditEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
