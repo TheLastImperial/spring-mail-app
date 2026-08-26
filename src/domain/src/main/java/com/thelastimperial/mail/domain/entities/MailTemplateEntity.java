@@ -19,7 +19,7 @@ import lombok.NoArgsConstructor;
 @Data
 @Entity
 @NoArgsConstructor
-@Table(name = "mail_audits")
+@Table(name = "mail_templates")
 public class MailTemplateEntity {
     @Id
     private String id;

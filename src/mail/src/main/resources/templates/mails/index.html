@@ -39,7 +39,7 @@
                   <i class="bi bi-pencil"></i>
                 </a>
                 <button class="btn btn-sm btn-outline-danger action-btn"
-                  title="Delete" onclick="openDelete(this)"
+                  title="Delete" onclick="openDeleteMail(this)"
                   th:attr="template-name=${template.id}">
                   <i class="bi bi-trash"></i>
                 </button>
@@ -51,9 +51,9 @@
 
       <!-- PAGINATION -->
 
-      <!-- <div class="d-flex flex-wrap justify-content-between align-items-center mt-3 gap-2">
+      <div class="d-flex flex-wrap justify-content-between align-items-center mt-3 gap-2">
         <span id="paginationInfo" class="text-muted small"
-          th:text="'Showing ' + ${pageSize} + ' of ' + ${totalElements} + ' menus'">
+          th:text="'Showing ' + ${start} + '-' + ${end} + ' of ' + ${totalElements} + ' mails'">
         </span>
         <nav aria-label="Paginación de menús">
           <ul class="pagination pagination-sm mb-0" id="pagination">
@@ -63,7 +63,7 @@
               <a class="page-link" href="#" th:if="${currentPage} == 0">
                 Previus
               </a>
-              <a class="page-link" th:href="@{/menus?page={page}(page=${currentPage})}"
+              <a class="page-link" th:href="@{/mails?page={page}(page=${currentPage})}"
                 th:if="${currentPage} != 0">
                 Previus
               </a>
@@ -78,15 +78,46 @@
                 th:if="${currentPage} + 1 == ${totalPages}">
                 Next
               </a>
-              <a class="page-link" th:href="@{/menus?page={page}(page=${currentPage} + 2)}"
+              <a class="page-link" th:href="@{/mails?page={page}(page=${currentPage} + 2)}"
                 th:if="${currentPage} + 1 != ${totalPages}" >
                 Next
               </a>
             </li>
           </ul>
         </nav>
-      </div> -->
+      </div>
     </div>
+
+    <!-- Modal Eliminar -->
+    <div class="modal fade" id="deleteModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-sm">
+        <div class="modal-content">
+          <div class="modal-header bg-danger text-white">
+            <h5 class="modal-title">
+              Delete Mail
+            </h5>
+            <button type="button" class="btn-close btn-close-white"
+              data-bs-dismiss="modal" aria-label="Cerrar">
+            </button>
+          </div>
+          <div class="modal-body">
+            <p class="mb-0">
+              You realy want to delete the Mail <strong id="deleteName"></strong>?
+            </p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+              Cancel
+            </button>
+            <a type="button" class="btn btn-danger" id="linkDelete">
+              Delete
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script th:src="@{/js/mail/main.js}"></script>
 
     <!-- END -->
   </div>

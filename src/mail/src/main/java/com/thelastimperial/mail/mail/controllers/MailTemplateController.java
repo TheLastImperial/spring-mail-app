@@ -19,6 +19,7 @@ import com.thelastimperial.mail.mail.controllers.requests.NewMailTemplate;
 import com.thelastimperial.mail.mail.controllers.responses.MailTemplate;
 import com.thelastimperial.mail.mail.services.MailTemplateService;
 
+import jakarta.validation.constraints.Min;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -35,9 +36,15 @@ public class MailTemplateController {
 
     @GetMapping
     public String index(
-        @RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "5") int size,
+        @RequestParam(defaultValue = "1") @Min(value = 1) int page,
+        @RequestParam(defaultValue = "5") int size,
         Model model
     ) {
+        if(page < 1)
+            page = 1;
+        else
+            page = page - 1;
+
         Page<MailTemplateEntity> pageData = mailTemplateService.getAll(page, size);
         List<MailTemplate> content = pageData.stream().map(ent -> {
             MailTemplate resp = new MailTemplate();
@@ -49,6 +56,14 @@ public class MailTemplateController {
         model.addAttribute("totalElements", pageData.getTotalElements());
         model.addAttribute("currentPage", pageData.getNumber());
         model.addAttribute("totalPages", pageData.getTotalPages());
+        int start = (page * size) + 1;
+        int end = (page + 1) * size;
+        if(page == pageData.getTotalPages() - 1){
+            end = (int)pageData.getTotalElements();
+        }
+        model.addAttribute("start", start);
+        model.addAttribute("end", end);
+
         return "mails/index";
     }
     
@@ -85,16 +100,15 @@ public class MailTemplateController {
         return "mails/edit";
     }
 
-    // TODO: Create strategy to update id.
-    @PostMapping("/update")
-    public String update(EditMailTemplate editMailTemplate, BindingResult result) {
+    @PostMapping("/update/{id}")
+    public String update(@PathVariable String id, EditMailTemplate editMailTemplate, BindingResult result) {
         if(result.hasErrors()){
             return "mails/edit";
         }
-        log.info("To Edit: {}", editMailTemplate);
+        log.info("MailTemplate Request: {}", editMailTemplate);
         MailTemplateEntity toEdit = new MailTemplateEntity();
         BeanUtils.copyProperties(editMailTemplate, toEdit);
-        MailTemplateEntity updated = mailTemplateService.update(toEdit.getId(), toEdit)
+        MailTemplateEntity updated = mailTemplateService.update(id, toEdit)
             .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
         return "redirect:/mails/show/" + updated.getId();
     }
