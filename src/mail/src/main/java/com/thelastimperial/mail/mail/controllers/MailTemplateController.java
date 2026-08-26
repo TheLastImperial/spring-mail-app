@@ -40,6 +40,7 @@ public class MailTemplateController {
         @RequestParam(defaultValue = "5") int size,
         Model model
     ) {
+        log.debug("Request Index");
         if(page < 1)
             page = 1;
         else
@@ -69,11 +70,13 @@ public class MailTemplateController {
     
     @GetMapping("/new")
     public String newMail(NewMailTemplate newMailTemplate) {
+        log.debug("Request Get New Mail Template");
         return "mails/new";
     }
     
     @PostMapping("/create")
     public String create(NewMailTemplate newMailTemplate, BindingResult result) {
+        log.debug("Request Post New Mail Template");
         if(result.hasErrors()){
             return "mails/new";
         }
@@ -86,6 +89,7 @@ public class MailTemplateController {
     
     @GetMapping("/show/{id}")
     public String show(@PathVariable String id, Model model) {
+        log.debug("Request show Mail Template");
         MailTemplateEntity response = mailTemplateService.get(id)
             .orElseThrow( () -> new ResponseStatusException(HttpStatus.NOT_FOUND));
         model.addAttribute("mail", response);
@@ -94,6 +98,7 @@ public class MailTemplateController {
 
     @GetMapping("/edit/{id}")
     public String edit(EditMailTemplate editMailTemplate, @PathVariable String id) {
+        log.debug("Request Edit Mail Template");
         MailTemplateEntity response = mailTemplateService.get(id)
             .orElseThrow( () -> new ResponseStatusException(HttpStatus.NOT_FOUND));
         BeanUtils.copyProperties(response, editMailTemplate);
@@ -102,10 +107,10 @@ public class MailTemplateController {
 
     @PostMapping("/update/{id}")
     public String update(@PathVariable String id, EditMailTemplate editMailTemplate, BindingResult result) {
+        log.debug("Request update Mail Template");
         if(result.hasErrors()){
             return "mails/edit";
         }
-        log.info("MailTemplate Request: {}", editMailTemplate);
         MailTemplateEntity toEdit = new MailTemplateEntity();
         BeanUtils.copyProperties(editMailTemplate, toEdit);
         MailTemplateEntity updated = mailTemplateService.update(id, toEdit)
@@ -115,6 +120,7 @@ public class MailTemplateController {
     
     @GetMapping("/delete/{id}")
     public String delete(@PathVariable String id) {
+        log.debug("Request Delete Mail Template");
         mailTemplateService.delete(id);
         return "redirect:/mails";
     }
