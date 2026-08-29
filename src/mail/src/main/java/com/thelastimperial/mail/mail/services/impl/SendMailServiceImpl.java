@@ -24,24 +24,20 @@ public class SendMailServiceImpl implements SendMailService {
     private final JavaMailSender mailSender;
 
     @Override
-    public void send(String to, String subject, String content, Map<String, Object> params) {
-        try {
-            MimeMessage message = mailSender.createMimeMessage();
-            Context ctx = new Context();
-            ctx.setVariables(params);
-            String htmlContent = stringTemplateEngine().process(content, ctx);
-            MimeMessageHelper helper = new MimeMessageHelper(
-                message, true, "UTF-8"
-            );
-            helper.setTo(to);
-            helper.setSubject(subject);
-            helper.setText(htmlContent, true);
-            mailSender.send(message);
-        } catch( Exception me ) {
-            log.error("There is a error trying to set email");
-            log.error(me.getMessage());
-            return;
-        }
+    public void send(
+        String to, String subject, String content, Map<String, Object> params
+    ) throws Exception {
+        MimeMessage message = mailSender.createMimeMessage();
+        Context ctx = new Context();
+        ctx.setVariables(params);
+        String htmlContent = stringTemplateEngine().process(content, ctx);
+        MimeMessageHelper helper = new MimeMessageHelper(
+            message, true, "UTF-8"
+        );
+        helper.setTo(to);
+        helper.setSubject(subject);
+        helper.setText(htmlContent, true);
+        mailSender.send(message);
     }
 
     private TemplateEngine stringTemplateEngine() {

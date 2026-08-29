@@ -1,17 +1,15 @@
 package com.thelastimperial.mail.domain.entities;
 
 import java.time.LocalDateTime;
-import java.util.UUID;
+import java.util.List;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -23,21 +21,14 @@ import lombok.NoArgsConstructor;
 @Data
 @Entity
 @NoArgsConstructor
-@Table(name = "mail_audits")
-public class MailAuditEntity {
+@Table(name="mail_audit_actions")
+public class MailAuditActionEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
+    private String id;
+    private String description;
 
-    private String mailTemplateId;
-    private String sendBy;
-    private String sendTo;
-    private boolean isSended;
-    private String comment;
-
-    @ManyToOne
-    @JoinColumn(name="action_id", nullable = true)
-    private MailAuditActionEntity action;
+    @OneToMany(mappedBy = "action", fetch = FetchType.LAZY)
+    private List<MailAuditEntity> audits;
 
     @CreationTimestamp
     private LocalDateTime createdAt;
