@@ -16,3 +16,14 @@ services:
       - 5432:5432
     volumes:
       - ./db:/docker-entrypoint-initdb.d
+  rabbitmq:
+    image: rabbitmq:4.3.2-management-alpine
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+  kafka:
+    image: apache/kafka:4.3.1
+    container_name: kafka
+    ports:
+      - "9092:9092"
