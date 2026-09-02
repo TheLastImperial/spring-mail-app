@@ -2,14 +2,13 @@ package com.thelastimperial.mail.mail.services.impl;
 
 import java.util.Optional;
 
-import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Service;
 
 import com.thelastimperial.mail.domain.entities.MailTemplateEntity;
 import com.thelastimperial.mail.domain.repositories.MailTemplateRepository;
 import com.thelastimperial.mail.helper.requests.MailRequest;
 import com.thelastimperial.mail.helper.requests.MailRequestWrapper;
-import com.thelastimperial.mail.helper.services.ConsumeMailService;
+import com.thelastimperial.mail.mail.services.HandlerConsumeMailService;
 import com.thelastimperial.mail.mail.services.SendMailService;
 import com.thelastimperial.utils.services.AuditService;
 
@@ -19,16 +18,13 @@ import lombok.extern.slf4j.Slf4j;
 @AllArgsConstructor
 @Service
 @Slf4j
-public class ConsumeMailServiceImpl implements ConsumeMailService {
+public class HandlerConsumeMailServiceImpl implements HandlerConsumeMailService {
     private final MailTemplateRepository mailTemplateRepository;
     private final SendMailService sendMailService;
     private final AuditService<MailRequestWrapper> mailAuditService;
 
-    @RabbitListener(queues = "${com.thelastimperial.mail.mq.queue}")
     @Override
     public void accept(MailRequest t) {
-        log.debug("Received request to send Mail: {}", t.getTemplateId());
-        
         MailRequestWrapper mrw = MailRequestWrapper.builder()
             .mailRequest(t)
             .isSended(true)
@@ -54,4 +50,5 @@ public class ConsumeMailServiceImpl implements ConsumeMailService {
         }
         mailAuditService.save(mrw);
     }
+    
 }
