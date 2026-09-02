@@ -2,6 +2,7 @@ package com.thelastimperial.mail.mail.services.impl.notifications;
 
 import java.util.HashMap;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.thelastimperial.auth.auth.services.NotificationService;
@@ -10,15 +11,26 @@ import com.thelastimperial.auth.domain.entities.UserRecoveryEntity;
 import com.thelastimperial.mail.helper.requests.MailRequest;
 import com.thelastimperial.mail.helper.services.ProduceMailService;
 
-import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-@AllArgsConstructor
 @Service
 @Slf4j
 public class RecoveryNotificationService implements NotificationService<UserRecoveryEntity> {
     private final ProduceMailService produceMailService;
+    private final String serverAddress;
+
     private final String TEMPLATE_ID = "RECOVERY_ACCOUNT";
+
+    
+    public RecoveryNotificationService(
+        ProduceMailService produceMailService,
+        @Value("${com.thelastimperial.mail.server.address}") String serverAddress
+    ) {
+        this.produceMailService = produceMailService;
+        this.serverAddress = serverAddress;
+    }
+
+
     @Override
     public void send(UserRecoveryEntity recovery) {
 
@@ -26,7 +38,10 @@ public class RecoveryNotificationService implements NotificationService<UserReco
 
         HashMap<String, Object> params = new HashMap<>();
         params.put("username", user.getUsername());
-        params.put("url", "/auth/new-password/" + recovery.getId());
+        params.put(
+            "url",
+            serverAddress + "/auth/new-password/" + recovery.getId()
+        );
 
         MailRequest mailRequest = MailRequest.builder()
         // The username have the Email
