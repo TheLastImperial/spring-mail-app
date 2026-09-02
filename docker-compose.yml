@@ -22,3 +22,8 @@ services:
     ports:
       - "5672:5672"
       - "15672:15672"
+  kafka:
+    image: apache/kafka:4.3.1
+    container_name: kafka
+    ports:
+      - "9092:9092"
