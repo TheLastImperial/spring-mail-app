@@ -27,6 +27,7 @@
 	</scm>
 	<properties>
 		<java.version>21</java.version>
+		<maven.deploy.skip>true</maven.deploy.skip>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -62,12 +63,12 @@
 		<dependency>
 			<groupId>com.thelastimperial.mail</groupId>
 			<artifactId>domain</artifactId>
-			<version>${version}</version>
+			<version>${project.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.thelastimperial.mail</groupId>
 			<artifactId>helper</artifactId>
-			<version>${version}</version>
+			<version>${project.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.thelastimperial.auth</groupId>

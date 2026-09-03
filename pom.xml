@@ -29,7 +29,6 @@
 	</scm>
 	<properties>
 		<java.version>21</java.version>
-		<revision>1.1.0</revision>
 	</properties>
     <modules>
         <module>src/domain</module>
@@ -40,7 +39,7 @@
 		<repository>
 			<id>github</id>
 			<name>GitHub Packages</name>
-			<url>https://maven.pkg.github.com/TheLastImperial/spring-mail</url>
+			<url>https://maven.pkg.github.com/TheLastImperial/spring-mail-app</url>
 		</repository>
 	</distributionManagement>
 	<repositories>
