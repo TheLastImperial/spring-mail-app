@@ -1,0 +1,88 @@
+<html layout:decorate="~{layouts/main}">
+<body>
+  <div layout:fragment="content">
+    <!-- START -->
+
+    <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-4">
+      <a
+        class="btn btn-primary"
+        th:href="@{/mails-allows/allow}"
+      >
+        <i class="bi bi-plus-lg me-1"></i> Allow emails
+      </a>
+      <a
+        class="btn btn-primary"
+        th:href="@{/mails-allows/block}"
+      >
+        <i class="bi bi-plus-lg me-1"></i> Block emails
+      </a>
+    </div>
+
+    <!-- TABLE -->
+    <div class="table-container">
+      <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0">
+          <thead class="table-light">
+            <tr>
+              <th>Email</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody id="tableBody">
+            <tr th:each="mail : ${content}">
+              <td th:text="${mail.id}"></td>
+              <td >
+                <span class="badge status-badge"
+                  th:classappend="${mail.isAllow ? 'text-bg-success' : 'text-bg-danger'}"
+                  th:text="${mail.isAllow ? 'Allow' : 'Block'}"
+                ></span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- PAGINATION -->
+
+      <div class="d-flex flex-wrap justify-content-between align-items-center mt-3 gap-2">
+        <span id="paginationInfo" class="text-muted small"
+          th:text="'Showing ' + ${start} + '-' + ${end} + ' of ' + ${totalElements} + ' mails'">
+        </span>
+        <nav aria-label="Paginación de menús">
+          <ul class="pagination pagination-sm mb-0" id="pagination">
+            <li
+              class="page-item"
+              th:classappend="${currentPage} == 0 ? 'disabled' : ''">
+              <a class="page-link" href="#" th:if="${currentPage} == 0">
+                Previus
+              </a>
+              <a class="page-link" th:href="@{/mails?page={page}(page=${currentPage})}"
+                th:if="${currentPage} != 0">
+                Previus
+              </a>
+            </li>
+            <li class="page-item">
+              <a class="page-link" th:text="${currentPage} + 1">
+              </a>
+            </li>
+            <li class="page-item"
+              th:classappend="${currentPage} + 1 == ${totalPages} ? 'disabled' : ''">
+              <a class="page-link" href="#"
+                th:if="${currentPage} + 1 == ${totalPages}">
+                Next
+              </a>
+              <a class="page-link" th:href="@{/mails?page={page}(page=${currentPage} + 2)}"
+                th:if="${currentPage} + 1 != ${totalPages}" >
+                Next
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+
+    </div>
+
+    <!-- END -->
+  </div>
+</body>
+</html>
