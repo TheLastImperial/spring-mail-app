@@ -8,6 +8,7 @@ import com.thelastimperial.mail.domain.entities.MailTemplateEntity;
 import com.thelastimperial.mail.domain.repositories.MailTemplateRepository;
 import com.thelastimperial.mail.helper.requests.MailRequest;
 import com.thelastimperial.mail.helper.requests.MailRequestWrapper;
+import com.thelastimperial.mail.mail.services.AllowSendMailService;
 import com.thelastimperial.mail.mail.services.HandlerConsumeMailService;
 import com.thelastimperial.mail.mail.services.SendMailService;
 import com.thelastimperial.utils.services.AuditService;
@@ -21,6 +22,7 @@ import lombok.extern.slf4j.Slf4j;
 public class HandlerConsumeMailServiceImpl implements HandlerConsumeMailService {
     private final MailTemplateRepository mailTemplateRepository;
     private final SendMailService sendMailService;
+    private final AllowSendMailService allowSendMailService;
     private final AuditService<MailRequestWrapper> mailAuditService;
 
     @Override
@@ -30,7 +32,12 @@ public class HandlerConsumeMailServiceImpl implements HandlerConsumeMailService 
             .isSended(true)
             .actionId("EMAIL_SEND")
             .build();
-
+        if(!allowSendMailService.canSend(t.getTo())){
+            mrw.setSended(false);
+            mrw.setActionId("EMAIL_NOT_ALLOW");
+            mailAuditService.save(mrw);
+            return;
+        }
         Optional<MailTemplateEntity> templateOpt = mailTemplateRepository
             .findById(t.getTemplateId());
         if(templateOpt.isEmpty()){
