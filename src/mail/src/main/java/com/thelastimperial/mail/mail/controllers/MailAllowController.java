@@ -1,5 +1,6 @@
 package com.thelastimperial.mail.mail.controllers;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -22,8 +23,6 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-
 
 @AllArgsConstructor
 @Controller
@@ -68,14 +67,14 @@ public class MailAllowController {
     public String allow(NewMailAllow newMailAllow) {
         return "allows/allow";
     }
-    
+
     @PostMapping("/allow")
-    public String allowEmails(NewMailAllow newMailAllow, BindingResult result) {
+    public String allowEmails(NewMailAllow newMailAllow, BindingResult result, Principal principal) {
         if(result.hasErrors()) {
             return "allows/allow";
         }
         log.info("Request: {}", newMailAllow);
-        mailAllowService.allow(newMailAllow.getEmails());
+        mailAllowService.allow(newMailAllow.getEmails(), principal);
         return "redirect:/mails-allows";
     }
 
@@ -85,14 +84,12 @@ public class MailAllowController {
     }
 
     @PostMapping("/block")
-    public String blockEmails(NewMailAllow newMailAllow, BindingResult result) {
+    public String blockEmails(NewMailAllow newMailAllow, BindingResult result, Principal principal) {
         if(result.hasErrors()){
             return "allows/block";
         }
-        mailAllowService.block(newMailAllow.getEmails());
+        mailAllowService.block(newMailAllow.getEmails(), principal);
         return "redirect:/mails-allows";
     }
-    
-    
-    
+
 }
