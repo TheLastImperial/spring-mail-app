@@ -45,6 +45,17 @@
             </div>
             <div class="mb-3">
               <label class="form-label">
+                Subject
+              </label>
+              <input
+                type="text"
+                class="form-control"
+                required
+                maxlength="100"
+                th:field="*{subject}">
+            </div>
+            <div class="mb-3">
+              <label class="form-label">
                 Content
               </label>
               <textarea
