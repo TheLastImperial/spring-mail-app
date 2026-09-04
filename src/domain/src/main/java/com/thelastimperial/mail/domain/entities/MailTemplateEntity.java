@@ -24,6 +24,7 @@ public class MailTemplateEntity {
     @Id
     private String id;
     private String description;
+    private String subject;
     @Column(columnDefinition = "TEXT")
     private String content;
     private boolean isHtml;

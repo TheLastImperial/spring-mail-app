@@ -1,0 +1,97 @@
+<html layout:decorate="~{layouts/main}">
+<body>
+  <div layout:fragment="content">
+    <!-- START -->
+
+    <!-- TABLE -->
+    <div class="table-container">
+      <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0">
+          <thead class="table-light">
+            <tr>
+              <th>Template</th>
+              <th>Error</th>
+              <th>Retried</th>
+              <th>Canceled</th>
+              <th class="text-end">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="tableBody">
+            <tr th:each="retry : ${content}">
+              <td th:text="${retry.templateId}"></td>
+              <td th:text="${retry.actionId}"></td>
+              <td >
+                <span class="badge status-badge"
+                  th:classappend="${retry.isRetried ? 'text-bg-success' : 'text-bg-danger'}"
+                  th:text="${retry.isRetried ? 'Retried' : 'Waiting'}"
+                ></span>
+              </td>
+              <td >
+                <span class="badge status-badge"
+                  th:classappend="${retry.isCanceled ? 'text-bg-success' : 'text-bg-danger'}"
+                  th:text="${retry.isCanceled ? 'Canceled' : 'Waiting'}"
+                ></span>
+              </td>
+              <td class="text-end">
+                <a class="btn btn-sm btn-outline-info action-btn me-1"
+                  th:href="@{/mails/retries/retry/{id}(id=${retry.id})}"
+                  th:if="${!retry.isRetried && !retry.isCanceled}"
+                  title="Retry">
+                  <i class="bi bi-send-check-fill"></i>
+                </a>
+                <a class="btn btn-sm btn-outline-danger action-btn me-1"
+                  title="Cancel"
+                  th:if="${!retry.isRetried && !retry.isCanceled}"
+                  th:href="@{/mails/retries/cancel/{id}(id=${retry.id})}">
+                  <i class="bi bi-x-circle"></i>
+                </a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- PAGINATION -->
+
+      <div class="d-flex flex-wrap justify-content-between align-items-center mt-3 gap-2">
+        <span id="paginationInfo" class="text-muted small"
+          th:text="'Showing ' + ${start} + '-' + ${end} + ' of ' + ${totalElements} + ' mails'">
+        </span>
+        <nav aria-label="Paginación de menús">
+          <ul class="pagination pagination-sm mb-0" id="pagination">
+            <li
+              class="page-item"
+              th:classappend="${currentPage} == 0 ? 'disabled' : ''">
+              <a class="page-link" href="#" th:if="${currentPage} == 0">
+                Previus
+              </a>
+              <a class="page-link" th:href="@{/mails?page={page}(page=${currentPage})}"
+                th:if="${currentPage} != 0">
+                Previus
+              </a>
+            </li>
+            <li class="page-item">
+              <a class="page-link" th:text="${currentPage} + 1">
+              </a>
+            </li>
+            <li class="page-item"
+              th:classappend="${currentPage} + 1 == ${totalPages} ? 'disabled' : ''">
+              <a class="page-link" href="#"
+                th:if="${currentPage} + 1 == ${totalPages}">
+                Next
+              </a>
+              <a class="page-link" th:href="@{/mails?page={page}(page=${currentPage} + 2)}"
+                th:if="${currentPage} + 1 != ${totalPages}" >
+                Next
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+
+    </div>
+
+    <!-- END -->
+  </div>
+</body>
+</html>

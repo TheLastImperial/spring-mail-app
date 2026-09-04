@@ -39,7 +39,6 @@ public class RegisterNotificationService implements NotificationService<UserActi
         MailRequest mailRequest = MailRequest.builder()
         // The username have the Email
         .to(activation.getUser().getUsername())
-        .subject("Activation Account.")
         .templateId(TEMPLATE_ID)
         .params(params)
         .build();
