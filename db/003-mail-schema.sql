@@ -16,7 +16,8 @@ CREATE TABLE public.mail_templates (
     created_at timestamp(6) without time zone NOT NULL,
     description character varying(255),
     is_html boolean NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    subject character varying(255)
 );
 
 CREATE TABLE public.mail_audit_actions (
