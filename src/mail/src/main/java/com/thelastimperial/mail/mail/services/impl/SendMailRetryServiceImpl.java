@@ -66,4 +66,20 @@ public class SendMailRetryServiceImpl implements SendMailRetryService {
                 mailRetryRepository.save(ele);                
             });
     }
+
+    @Override
+    public void retryByActionId(String actionId) {
+        mailRetryRepository.findByActionIdAndIsRetriedAndIsCanceled(
+            actionId, false, false
+        ).stream().forEach(ele -> {
+                MailRequest mr = MailRequest
+                    .builder()
+                    .to(ele.getSendTo())
+                    .params(ele.getParams())
+                    .build();
+                produceMailService.accept(mr);
+                ele.setRetried(true);
+                mailRetryRepository.save(ele); 
+        });;
+    }
 }

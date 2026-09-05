@@ -6,4 +6,5 @@ public interface SendMailRetryService {
     public void retryAll();
     public void retryById(UUID id);
     public void retryByTemplate(String templateId);
+    public void retryByActionId(String actionId);
 }

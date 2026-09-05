@@ -4,6 +4,7 @@ import java.util.UUID;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.thelastimperial.mail.domain.entities.MailRetryEntity;
@@ -51,6 +52,19 @@ public class MailRetryServiceImpl implements MailRetryService {
                 mailRetryRepository.save(mr);
             }
         });
+    }
+
+    @Override
+    public Page<MailRetryEntity> getByActionId(int page, int size, String actionId) {
+        Pageable pageable = PageRequest.of(page, size);
+        return mailRetryRepository.findByActionIdAndIsRetriedAndIsCanceled(pageable, actionId,
+            false, false
+        );
+    }
+
+    @Override
+    public void retryByActionId(String actionId) {
+        sendMailRetryService.retryByActionId(actionId);
     }
 
 }

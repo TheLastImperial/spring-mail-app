@@ -4,31 +4,17 @@
     <!-- START -->
     <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-4">
       <div>
-        <h1 class="h3 fw-bold mb-0">Mails not send</h1>
-        <p class="text-muted mb-0">
-          Admnistrate all your products of asdf
-        </p>
+        <h2 class="h3 fw-bold mb-0"
+          th:text="'Retry mails with error: ' + ${action}">
+        </h2>
       </div>
-      <div>
-        <select id="selectAction" class="form-control"
-        onchange="changeAction(this)"
-        >
-
-          <option value="NONE">Not Selected</option>
-          <option
-            th:each="act : ${actions}"
-            th:value="${act}"
-            th:text="${act}">
-          </option>
-        </select>
-        <a
+      <a
           class="btn btn-primary"
           th:href="@{/mails/retries}"
           id="linkAction"
-        >
-          <i class="bi bi-plus-lg me-1"></i> Select error
-        </a>
-      </div>
+      >
+          <i class="bi bi-plus-lg me-1"></i> Retry
+      </a>
     </div>
     <!-- TABLE -->
     <div class="table-container">
@@ -117,21 +103,7 @@
       </div>
 
     </div>
-    <script>
-      function changeAction(ele) {
-        console.log(ele);
-        const actionId = ele.value;
-        console.log(actionId);
-        const linkEle = document.getElementById("linkAction");
-        if(actionId == "NONE"){
-          console.log("IF: " + ele.value)
-          linkEle.setAttribute("href", "/mails/retries");
-        }else {
-          console.log("ELSE: " + ele.value)
-          linkEle.setAttribute("href", "/mails/retries/byerror/" + ele.value);
-        }
-      }
-    </script>
+
 
     <!-- END -->
   </div>

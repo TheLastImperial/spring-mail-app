@@ -13,4 +13,10 @@ public interface MailRetryRepository extends JpaRepository<MailRetryEntity, UUID
     public List<MailRetryEntity> findByTemplateId(String templateId);
     public List<MailRetryEntity> findByRetriedAndCanceled(boolean retried, boolean canceled);
     public Page<MailRetryEntity> findAll(Pageable page);
+    public Page<MailRetryEntity> findByActionIdAndIsRetriedAndIsCanceled(
+        Pageable page, String actionId, boolean retried, boolean canceled
+    );
+    public Page<MailRetryEntity> findByActionIdAndIsRetriedAndIsCanceled(
+        String actionId, boolean retried, boolean canceled
+    );
 }
