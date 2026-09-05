@@ -26,7 +26,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 @AllArgsConstructor
 @Controller
-@RequestMapping("/mails-allows")
+@RequestMapping("/mails/allows")
 @Slf4j
 public class MailAllowController {
     private final MailAllowService mailAllowService;
@@ -75,7 +75,7 @@ public class MailAllowController {
         }
         log.info("Request: {}", newMailAllow);
         mailAllowService.allow(newMailAllow.getEmails(), principal);
-        return "redirect:/mails-allows";
+        return "redirect:/mails/allows";
     }
 
     @GetMapping("/block")
@@ -89,7 +89,7 @@ public class MailAllowController {
             return "allows/block";
         }
         mailAllowService.block(newMailAllow.getEmails(), principal);
-        return "redirect:/mails-allows";
+        return "redirect:/mails/allows";
     }
 
 }
