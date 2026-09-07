@@ -6,13 +6,13 @@
     <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-4">
       <a
         class="btn btn-primary"
-        th:href="@{/mails/allows/allow}"
+        th:href="@{/allows/allow}"
       >
         <i class="bi bi-plus-lg me-1"></i> Allow emails
       </a>
       <a
         class="btn btn-primary"
-        th:href="@{/mails/allows/block}"
+        th:href="@{/allows/block}"
       >
         <i class="bi bi-plus-lg me-1"></i> Block emails
       </a>
@@ -56,7 +56,7 @@
               <a class="page-link" href="#" th:if="${currentPage} == 0">
                 Previus
               </a>
-              <a class="page-link" th:href="@{/mails?page={page}(page=${currentPage})}"
+              <a class="page-link" th:href="@{/allows?page={page}(page=${currentPage})}"
                 th:if="${currentPage} != 0">
                 Previus
               </a>
@@ -71,7 +71,7 @@
                 th:if="${currentPage} + 1 == ${totalPages}">
                 Next
               </a>
-              <a class="page-link" th:href="@{/mails?page={page}(page=${currentPage} + 2)}"
+              <a class="page-link" th:href="@{/allows?page={page}(page=${currentPage} + 2)}"
                 th:if="${currentPage} + 1 != ${totalPages}" >
                 Next
               </a>

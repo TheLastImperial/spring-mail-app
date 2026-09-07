@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 @AllArgsConstructor
 @Controller
-@RequestMapping("/mails/retries")
+@RequestMapping("/retries")
 @Slf4j
 public class MailRetryController {
     private final MailRetryService mailRetryService;

@@ -23,7 +23,7 @@
         </select>
         <a
           class="btn btn-primary"
-          th:href="@{/mails/retries}"
+          th:href="@{/retries}"
           id="linkAction"
         >
           <i class="bi bi-plus-lg me-1"></i> Select error
@@ -61,7 +61,7 @@
               </td>
               <td class="text-end">
                 <a class="btn btn-sm btn-outline-info action-btn me-1"
-                  th:href="@{/mails/retries/retry/{id}(id=${retry.id})}"
+                  th:href="@{/retries/retry/{id}(id=${retry.id})}"
                   th:if="${!retry.isRetried && !retry.isCanceled}"
                   title="Retry">
                   <i class="bi bi-send-check-fill"></i>
@@ -69,7 +69,7 @@
                 <a class="btn btn-sm btn-outline-danger action-btn me-1"
                   title="Cancel"
                   th:if="${!retry.isRetried && !retry.isCanceled}"
-                  th:href="@{/mails/retries/cancel/{id}(id=${retry.id})}">
+                  th:href="@{/retries/cancel/{id}(id=${retry.id})}">
                   <i class="bi bi-x-circle"></i>
                 </a>
               </td>
@@ -92,7 +92,7 @@
               <a class="page-link" href="#" th:if="${currentPage} == 0">
                 Previus
               </a>
-              <a class="page-link" th:href="@{/mails?page={page}(page=${currentPage})}"
+              <a class="page-link" th:href="@{/retries?page={page}(page=${currentPage})}"
                 th:if="${currentPage} != 0">
                 Previus
               </a>
@@ -107,7 +107,7 @@
                 th:if="${currentPage} + 1 == ${totalPages}">
                 Next
               </a>
-              <a class="page-link" th:href="@{/mails?page={page}(page=${currentPage} + 2)}"
+              <a class="page-link" th:href="@{/retries?page={page}(page=${currentPage} + 2)}"
                 th:if="${currentPage} + 1 != ${totalPages}" >
                 Next
               </a>
@@ -125,10 +125,10 @@
         const linkEle = document.getElementById("linkAction");
         if(actionId == "NONE"){
           console.log("IF: " + ele.value)
-          linkEle.setAttribute("href", "/mails/retries");
+          linkEle.setAttribute("href", "/retries");
         }else {
           console.log("ELSE: " + ele.value)
-          linkEle.setAttribute("href", "/mails/retries/byerror/" + ele.value);
+          linkEle.setAttribute("href", "/retries/byerror/" + ele.value);
         }
       }
     </script>

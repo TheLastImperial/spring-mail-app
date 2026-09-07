@@ -26,7 +26,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 @AllArgsConstructor
 @Controller
-@RequestMapping("/mails/allows")
+@RequestMapping("/allows")
 @Slf4j
 public class MailAllowController {
     private final MailAllowService mailAllowService;
