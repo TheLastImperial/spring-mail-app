@@ -46,7 +46,6 @@ public class RecoveryNotificationService implements NotificationService<UserReco
         MailRequest mailRequest = MailRequest.builder()
         // The username have the Email
         .to(user.getUsername())
-        .subject("Activation Account.")
         .templateId(TEMPLATE_ID)
         .params(params)
         .build();

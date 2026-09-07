@@ -10,6 +10,7 @@ import com.thelastimperial.mail.helper.requests.MailRequest;
 import com.thelastimperial.mail.helper.requests.MailRequestWrapper;
 import com.thelastimperial.mail.mail.services.AllowSendMailService;
 import com.thelastimperial.mail.mail.services.HandlerConsumeMailService;
+import com.thelastimperial.mail.mail.services.MailRetryService;
 import com.thelastimperial.mail.mail.services.SendMailService;
 import com.thelastimperial.utils.services.AuditService;
 
@@ -23,6 +24,7 @@ public class HandlerConsumeMailServiceImpl implements HandlerConsumeMailService 
     private final MailTemplateRepository mailTemplateRepository;
     private final SendMailService sendMailService;
     private final AllowSendMailService allowSendMailService;
+    private final MailRetryService mailRetryService;
     private final AuditService<MailRequestWrapper> mailAuditService;
 
     @Override
@@ -36,6 +38,7 @@ public class HandlerConsumeMailServiceImpl implements HandlerConsumeMailService 
             mrw.setSended(false);
             mrw.setActionId("EMAIL_NOT_ALLOW");
             mailAuditService.save(mrw);
+            mailRetryService.save(mrw);
             return;
         }
         Optional<MailTemplateEntity> templateOpt = mailTemplateRepository
@@ -45,15 +48,20 @@ public class HandlerConsumeMailServiceImpl implements HandlerConsumeMailService 
             mrw.setSended(false);
             mrw.setActionId("TEMPLATE_NOT_FOUND");
             mailAuditService.save(mrw);
+            mailRetryService.save(mrw);
             return;
         }
         MailTemplateEntity template = templateOpt.get();
+        log.debug("TemplateId: {}", template.getId());
+        log.debug("Subject: {}", template.getSubject());
+        log.debug("Params: {}", t.getParams());
         try{
-            sendMailService.send(t.getTo(), t.getSubject(), template.getContent(), t.getParams());
+            sendMailService.send(t.getTo(), template.getSubject(), template.getContent(), t.getParams());
         }catch(Exception e){
             mrw.setSended(false);
             mrw.setActionId("TEMPLATE_ERROR");
             mrw.setComment(e.getClass().getName());
+            mailRetryService.save(mrw);
         }
         mailAuditService.save(mrw);
     }

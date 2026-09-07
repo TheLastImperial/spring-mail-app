@@ -22,7 +22,7 @@ public class MailSecurityConfig {
         .formLogin( login -> login
             .loginPage("/auth/login")
             .failureUrl("/auth/login?error=true")
-            .defaultSuccessUrl("/mails", true)
+            .defaultSuccessUrl("/", true)
             .permitAll()
         )
         .rememberMe(rememberme -> rememberme

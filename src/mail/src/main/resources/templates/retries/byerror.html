@@ -2,40 +2,62 @@
 <body>
   <div layout:fragment="content">
     <!-- START -->
-
     <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-4">
+      <div>
+        <h2 class="h3 fw-bold mb-0"
+          th:text="'Retry mails with error: ' + ${action}">
+        </h2>
+      </div>
       <a
-        class="btn btn-primary"
-        th:href="@{/allows/allow}"
+          class="btn btn-primary"
+          th:href="@{/retries/retry/byerror/{action}(action=${action})}"
+          id="linkAction"
       >
-        <i class="bi bi-plus-lg me-1"></i> Allow emails
-      </a>
-      <a
-        class="btn btn-primary"
-        th:href="@{/allows/block}"
-      >
-        <i class="bi bi-plus-lg me-1"></i> Block emails
+          <i class="bi bi-plus-lg me-1"></i> Retry
       </a>
     </div>
-
     <!-- TABLE -->
     <div class="table-container">
       <div class="table-responsive">
         <table class="table table-hover align-middle mb-0">
           <thead class="table-light">
             <tr>
-              <th>Email</th>
-              <th>Status</th>
+              <th>Template</th>
+              <th>Error</th>
+              <th>Retried</th>
+              <th>Canceled</th>
+              <th class="text-end">Actions</th>
             </tr>
           </thead>
           <tbody id="tableBody">
-            <tr th:each="mail : ${content}">
-              <td th:text="${mail.id}"></td>
+            <tr th:each="retry : ${content}">
+              <td th:text="${retry.templateId}"></td>
+              <td th:text="${retry.actionId}"></td>
               <td >
                 <span class="badge status-badge"
-                  th:classappend="${mail.isAllow ? 'text-bg-success' : 'text-bg-danger'}"
-                  th:text="${mail.isAllow ? 'Allow' : 'Block'}"
+                  th:classappend="${retry.isRetried ? 'text-bg-success' : 'text-bg-danger'}"
+                  th:text="${retry.isRetried ? 'Retried' : 'Waiting'}"
                 ></span>
+              </td>
+              <td >
+                <span class="badge status-badge"
+                  th:classappend="${retry.isCanceled ? 'text-bg-success' : 'text-bg-danger'}"
+                  th:text="${retry.isCanceled ? 'Canceled' : 'Waiting'}"
+                ></span>
+              </td>
+              <td class="text-end">
+                <a class="btn btn-sm btn-outline-info action-btn me-1"
+                  th:href="@{/retries/retry/{id}(id=${retry.id})}"
+                  th:if="${!retry.isRetried && !retry.isCanceled}"
+                  title="Retry">
+                  <i class="bi bi-send-check-fill"></i>
+                </a>
+                <a class="btn btn-sm btn-outline-danger action-btn me-1"
+                  title="Cancel"
+                  th:if="${!retry.isRetried && !retry.isCanceled}"
+                  th:href="@{/retries/cancel/{id}(id=${retry.id})}">
+                  <i class="bi bi-x-circle"></i>
+                </a>
               </td>
             </tr>
           </tbody>
@@ -56,7 +78,7 @@
               <a class="page-link" href="#" th:if="${currentPage} == 0">
                 Previus
               </a>
-              <a class="page-link" th:href="@{/allows?page={page}(page=${currentPage})}"
+              <a class="page-link" th:href="@{/retries?page={page}(page=${currentPage})}"
                 th:if="${currentPage} != 0">
                 Previus
               </a>
@@ -71,7 +93,7 @@
                 th:if="${currentPage} + 1 == ${totalPages}">
                 Next
               </a>
-              <a class="page-link" th:href="@{/allows?page={page}(page=${currentPage} + 2)}"
+              <a class="page-link" th:href="@{/retries?page={page}(page=${currentPage} + 2)}"
                 th:if="${currentPage} + 1 != ${totalPages}" >
                 Next
               </a>
@@ -81,6 +103,7 @@
       </div>
 
     </div>
+
 
     <!-- END -->
   </div>

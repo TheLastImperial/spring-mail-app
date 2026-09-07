@@ -14,7 +14,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class MailRequest {
     private String to;
-    private String subject;
     private String templateId;
     private Map<String, Object> params;
 }
