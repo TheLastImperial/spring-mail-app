@@ -22,7 +22,7 @@ VALUES
     <p>
         Use the next link to activate your account.
     </p>
-    <a th:href="$url}">Activate</a>
+    <a th:href="${url}">Activate</a>
     <p>Or copy and paste on your blowser</p>
     <p th:text="${url}"></p>
 </body>

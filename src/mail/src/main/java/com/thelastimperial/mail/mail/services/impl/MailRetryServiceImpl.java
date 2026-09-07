@@ -14,9 +14,11 @@ import com.thelastimperial.mail.mail.services.MailRetryService;
 import com.thelastimperial.mail.mail.services.SendMailRetryService;
 
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @AllArgsConstructor
 @Service
+@Slf4j
 public class MailRetryServiceImpl implements MailRetryService {
     private final MailRetryRepository mailRetryRepository;
     private final SendMailRetryService sendMailRetryService;
@@ -64,6 +66,7 @@ public class MailRetryServiceImpl implements MailRetryService {
 
     @Override
     public void retryByActionId(String actionId) {
+        log.debug("Retring by actionId: {}", actionId);
         sendMailRetryService.retryByActionId(actionId);
     }
 

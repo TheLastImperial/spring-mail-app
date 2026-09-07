@@ -18,6 +18,7 @@ import com.thelastimperial.mail.mail.services.MailRetryService;
 
 import jakarta.validation.constraints.Min;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,6 +26,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 @AllArgsConstructor
 @Controller
 @RequestMapping("/mails/retries")
+@Slf4j
 public class MailRetryController {
     private final MailRetryService mailRetryService;
     private final MailAuditActionRepository mailAuditActionRepository;
@@ -71,6 +73,8 @@ public class MailRetryController {
     }
     @GetMapping("/retry/byerror/{actionId}")
     public String retryByActionId(@PathVariable String actionId) {
+        log.debug("Retring by actionId: {}", actionId);
+        mailRetryService.retryByActionId(actionId);
         return "redirect:/mails/retries";
     }
 

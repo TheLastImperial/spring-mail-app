@@ -16,7 +16,7 @@ public interface MailRetryRepository extends JpaRepository<MailRetryEntity, UUID
     public Page<MailRetryEntity> findByActionIdAndIsRetriedAndIsCanceled(
         Pageable page, String actionId, boolean retried, boolean canceled
     );
-    public Page<MailRetryEntity> findByActionIdAndIsRetriedAndIsCanceled(
+    public List<MailRetryEntity> findByActionIdAndIsRetriedAndIsCanceled(
         String actionId, boolean retried, boolean canceled
     );
 }

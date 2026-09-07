@@ -10,7 +10,7 @@
       </div>
       <a
           class="btn btn-primary"
-          th:href="@{/mails/retries}"
+          th:href="@{/mails/retries/retry/byerror/{action}(action=${action})}"
           id="linkAction"
       >
           <i class="bi bi-plus-lg me-1"></i> Retry
