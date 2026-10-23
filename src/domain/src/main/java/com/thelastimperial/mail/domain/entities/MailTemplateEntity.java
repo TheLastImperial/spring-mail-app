@@ -14,6 +14,10 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ *
+ * MailTemplateEntity Email Template to be send.
+*/
 @AllArgsConstructor
 @Builder
 @Data

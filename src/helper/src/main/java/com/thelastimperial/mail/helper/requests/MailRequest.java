@@ -8,6 +8,10 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ *
+ * MailRequest a mail that need to be send.
+*/
 @AllArgsConstructor
 @Builder
 @Data

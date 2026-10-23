@@ -13,6 +13,10 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ *
+ * MailAllowEntity Used to know if a mail is allow to send.
+*/
 @AllArgsConstructor
 @Builder
 @Data
