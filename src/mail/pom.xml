@@ -27,6 +27,7 @@
 	</scm>
 	<properties>
 		<java.version>21</java.version>
+		<auth.version>1.4.0</auth.version>
 		<maven.deploy.skip>true</maven.deploy.skip>
 	</properties>
 	<dependencies>
@@ -72,8 +73,8 @@
 		</dependency>
 		<dependency>
 			<groupId>com.thelastimperial.auth</groupId>
-			<artifactId>auth</artifactId>
-			<version>1.1.1</version>
+			<artifactId>oauthclient</artifactId>
+			<version>${auth.version}</version>
 		</dependency>
 
 		<dependency>
