@@ -16,6 +16,10 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ *
+ * MailAuditActionEntity Actions for MailAuditEntity.
+*/
 @AllArgsConstructor
 @Builder
 @Data

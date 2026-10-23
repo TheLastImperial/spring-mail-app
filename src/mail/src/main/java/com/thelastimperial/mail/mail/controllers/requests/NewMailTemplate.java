@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
 public class NewMailTemplate {
     private String id;
     private String description;
+    private String subject;
     private String content;
     private boolean isHtml;
 }

@@ -1,8 +1,8 @@
 services:
-  db:
+  maildb:
     image: postgres:18-alpine
     command: postgres -c 'max_connections=300'
-    container_name: db
+    container_name: maildb
     restart: always
     environment:
       TZ: ${TZ}
@@ -18,12 +18,12 @@ services:
       - ./db:/docker-entrypoint-initdb.d
   rabbitmq:
     image: rabbitmq:4.3.2-management-alpine
-    container_name: rabbitmq
+    container_name: mailrmq
     ports:
       - "5672:5672"
       - "15672:15672"
   kafka:
     image: apache/kafka:4.3.1
-    container_name: kafka
+    container_name: mailkafka
     ports:
       - "9092:9092"

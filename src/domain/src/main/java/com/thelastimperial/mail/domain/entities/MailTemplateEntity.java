@@ -14,6 +14,10 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ *
+ * MailTemplateEntity Email Template to be send.
+*/
 @AllArgsConstructor
 @Builder
 @Data
@@ -24,6 +28,7 @@ public class MailTemplateEntity {
     @Id
     private String id;
     private String description;
+    private String subject;
     @Column(columnDefinition = "TEXT")
     private String content;
     private boolean isHtml;

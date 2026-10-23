@@ -8,13 +8,16 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ *
+ * MailRequest a mail that need to be send.
+*/
 @AllArgsConstructor
 @Builder
 @Data
 @NoArgsConstructor
 public class MailRequest {
     private String to;
-    private String subject;
     private String templateId;
     private Map<String, Object> params;
 }
