@@ -15,6 +15,10 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ *
+ * MailAllowAuditEntity Entity to save audit data when update the MailAllowEntity.
+*/
 @AllArgsConstructor
 @Builder
 @Data

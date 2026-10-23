@@ -5,6 +5,10 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ *
+ * MailRequestWrapper Wrapper a mail request and extra data to resend if is needed.
+*/
 @AllArgsConstructor
 @Builder
 @Data

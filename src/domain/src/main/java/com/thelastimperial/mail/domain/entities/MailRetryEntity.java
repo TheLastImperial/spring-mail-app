@@ -19,6 +19,10 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ *
+ * MailRetryEntity Entity to retry send email.
+*/
 @AllArgsConstructor
 @Builder
 @Data

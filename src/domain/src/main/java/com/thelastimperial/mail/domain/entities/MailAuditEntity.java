@@ -18,6 +18,10 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ *
+ * MailAuditEntity Register that emails that are send or not.
+*/
 @AllArgsConstructor
 @Builder
 @Data
